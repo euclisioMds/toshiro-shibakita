@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  web:
+    image: php:7.4-apache
+    container_name: toshiro-web
+    volumes:
+      - ./index.php:/var/www/html/index.php
+      - ./nginx.conf:/etc/apache2/sites-available/000-default.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: toshiro-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: toshiro
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./banco.sql:/docker-entrypoint-initdb.d/banco.sql
+
+volumes:
+  db_data:
