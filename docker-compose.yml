@@ -11,15 +11,17 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "123"
       MYSQL_DATABASE: testedb
-      networks:
-      - minha-rede
+  
+  networks:
+    - minha-rede
 
   web:
     image: php:7.4-apache
     container_name: toshiro-web
     volumes:
-      - index.php:/var/www/html/index.php
-      - nginx.conf:/etc/apache2/sites-available/000-default.conf
+      - ./index.php:/var/www/html/index.php
+      - ./nginx.conf:/etc/apache2/sites-available/000-default.conf
+
     ports:
       - "8080:80"
     networks:
